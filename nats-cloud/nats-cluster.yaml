@@ -1,0 +1,30 @@
+apiVersion: nats.io/v1alpha2
+kind: NatsCluster
+metadata:
+  name: nats
+spec:
+  size: 3
+  version: "2.9.8"
+  config:
+    jetstream: true
+
+    mqtt:
+      port: 1883
+
+    accounts:
+      MQTT:
+        jetstream: enabled
+        users:
+          - user: "user"
+            password: "pass"
+          - user: "auth"
+            password: "auth"
+      SYS: {}
+
+    authorization:
+      auth_callout:
+        issuer: "ADFGWLPOKG3JVJAX4UN4LME3GCJ6UXYGRGLTRHQU5GM5T7WZWUH3PZPQ"
+        auth_users:
+          - "user"
+          - "auth"
+        account: MQTT

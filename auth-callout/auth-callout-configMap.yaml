@@ -1,0 +1,42 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: auth-callout-config
+data:
+  config.yaml: |
+    # Configuration for the auth-callout server
+    nats_setup:
+      override: false
+      resolver_file_name: "resolver.conf"
+      account_seed_file_name: "a.seed"
+      account_public_key_file_name: "a.pub"
+    database:
+      host: "postgres-service.default.svc.cluster.local"
+      port: 5432
+      username: "myuser"
+      password: "mypass"
+      database: "mydb"
+      ssl_mode: "disable"
+      log_level: "INFO"
+    cloud_nats:
+      backdoor_user: user
+      backdoor_password: pass 
+      auth_user: auth
+      auth_password: auth
+      host: nats.default.svc.cluster.local
+      port: 4222  
+    redis:
+      sentinel_mode: true 
+      master_name: mymaster
+      sentinel_addrs: my-app-redis-headless.default.svc.cluster.local:26379
+      sentinel_password: password
+      password: password
+      db: 0
+    local_nats:
+      host: local-nats.svc.cluster.local
+      port: 4222
+    logger:
+      level: "INFO" # options are: DEBUG, INFO, WARN, ERROR, PANIC
+      file:
+        extension: "log" # options are: log, json, txt
+        enable: false

@@ -1,0 +1,61 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nats-config
+data:
+  nats.conf: |
+    # NATS Server Configuration File
+    port: 4222
+    http_port: 8222
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nats-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nats-local
+  template:
+    metadata:
+      labels:
+        app: nats-local
+    spec:
+      containers:
+      - name: nats-local
+        image: nats:2.9-alpine
+        ports:
+        - name: client
+          containerPort: 4222
+        - name: monitoring
+          containerPort: 8222
+        # Use the configuration file from the ConfigMap
+        command:
+          - "nats-server"
+          - "-c"
+          - "/etc/nats-config/nats.conf"
+        volumeMounts:
+        - name: config-volume
+          mountPath: /etc/nats-config
+      volumes:
+      - name: config-volume
+        configMap:
+          name: nats-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: local-nats
+spec:
+  selector:
+    app: nats-local
+  ports:
+  - name: client
+    protocol: TCP
+    port: 4222
+    targetPort: 4222
+  - name: monitoring
+    protocol: TCP
+    port: 8222
+    targetPort: 8222

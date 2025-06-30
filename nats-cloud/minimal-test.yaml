@@ -1,0 +1,10 @@
+resourceType: "statefulset"
+
+persistence:
+  enabled: true
+
+cluster:
+  replicas: 3
+
+jetstream:
+  enabled: true

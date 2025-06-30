@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-callout-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: auth-callout-server
+  template:
+    metadata:
+      labels:
+        app: auth-callout-server
+    spec:
+      containers:
+        - name: auth-callout-server
+          image: auth-callout-server:v7
+          imagePullPolicy: Never
+          volumeMounts:
+            - name: signing-key
+              mountPath: /app/callout/server/nats
+              readOnly: true
+            - name: config-volume
+              mountPath: /app/callout/server/config/config.yaml
+              subPath: config.yaml
+              readOnly: true
+          env:
+            - name: ISSUER_KEY_PATH
+              value: /app/callout/server/nats/a.seed
+      volumes:
+        - name: signing-key
+          secret:
+            secretName: auth-signing-keys
+        - name: config-volume
+          configMap:
+            name: auth-callout-config

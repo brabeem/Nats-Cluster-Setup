@@ -1,0 +1,18 @@
+
+master:
+  name: "mymaster"
+
+auth:
+  enabled: true
+  password: "password" 
+
+sentinel:
+  enabled: true
+  service:
+    name: "redis-sentinel"
+    port: 26379
+  
+  
+  auth:
+    enabled: true
+    password: "password" 
