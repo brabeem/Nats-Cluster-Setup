@@ -1,18 +1,17 @@
-
-master:
-  name: "mymaster"
-
 auth:
   enabled: true
-  password: "password" 
+  password: "password"
+  sentinel: true
+
+
+master:
+  count: 1
+
+
+replica:
+  replicaCount: 3
 
 sentinel:
   enabled: true
-  service:
-    name: "redis-sentinel"
-    port: 26379
-  
-  
-  auth:
-    enabled: true
-    password: "password" 
+  masterSet: "mymaster"
+  quorum: 2

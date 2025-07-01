@@ -28,12 +28,12 @@ data:
     redis:
       sentinel_mode: true 
       master_name: mymaster
-      sentinel_addrs: my-app-redis-headless.default.svc.cluster.local:26379
+      sentinel_addrs: redis-headless.default.svc.cluster.local:26379
       sentinel_password: password
       password: password
       db: 0
     local_nats:
-      host: local-nats.svc.cluster.local
+      host: local-nats.default.svc.cluster.local
       port: 4222
     logger:
       level: "INFO" # options are: DEBUG, INFO, WARN, ERROR, PANIC

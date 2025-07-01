@@ -1,43 +1,39 @@
-resourceType: "statefulset"
+# values.yaml
+replicaCount: 3
 
-
-persistence:
-  enabled: true
-
-
-cluster:
-  replicas: 3
-
-
-jetstream:
-  enabled: true
-  fileStore:
+config:
+  cluster:
     enabled: true
-    size: 1Gi 
-  memStorage:
-    enabled: false
+    replicas: 3
+  jetstream:
+    enabled: true
+    fileStore:
+      pvc:
+        size: 10Gi
+  merge:
+    accounts:
+      MQTT:
+        users:
+          - { user: user, password: pass }
+          - { user: auth, password: auth }
+      SYS:
+        users:
+          - { user: sys, password: syspass }
+    authorization:
+      timeout: 2
+      auth_callout:
+        issuer: "ADFGWLPOKG3JVJAX4UN4LME3GCJ6UXYGRGLTRHQU5GM5T7WZWUH3PZPQ"
+        auth_users: ["user", "auth"]
+        account: "MQTT"
 
+container:
+  resources:
+    requests:
+      cpu: "2"
+      memory: 8Gi
+    limits:
+      cpu: "2"
+      memory: 8Gi
 
-mqtt:
+natsBox:
   enabled: true
-  port: 1883
-
-
-auth:
-  enabled: true
-  systemAccount: SYS
-  accounts:
-    MQTT:
-      jetstreamEnabled: true
-      users:
-        - user: user
-          password: pass
-        - user: auth
-          password: auth
-    SYS: {}
-  resolver:
-    type: full
-    preload:
-      "ADFGWLPOKG3JVJAX4UN4LME3GCJ6UXYGRGLTRHQU5GM5T7WZWUH3PZPQ":
-        - user
-        - auth
