@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: nats-config
+  name: nats-local-config
 data:
   nats.conf: |
     # NATS Server Configuration File
@@ -34,14 +34,14 @@ spec:
         command:
           - "nats-server"
           - "-c"
-          - "/etc/nats-config/nats.conf"
+          - "/etc/nats-local-config/nats.conf"
         volumeMounts:
         - name: config-volume
-          mountPath: /etc/nats-config
+          mountPath: /etc/nats-local-config
       volumes:
       - name: config-volume
         configMap:
-          name: nats-config
+          name: nats-local-config
 ---
 apiVersion: v1
 kind: Service
