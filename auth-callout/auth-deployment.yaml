@@ -12,10 +12,12 @@ spec:
       labels:
         app: auth-callout-server
     spec:
+      imagePullSecrets:
+        - name: regcred
       containers:
         - name: auth-callout-server
-          image: auth-callout-server:v7
-          imagePullPolicy: Never
+          image: brabeem/nats-auth-callout-server:latest
+          imagePullPolicy: Always
           volumeMounts:
             - name: signing-key
               mountPath: /app/callout/server/nats

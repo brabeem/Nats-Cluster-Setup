@@ -13,7 +13,7 @@ This guide provides step-by-step instructions to deploy the complete application
 
 ## Step 1: Build and Push the `nats-auth-callout-server` Docker Image
 
-The remote Kubernetes cluster cannot use your local Docker images. You must build the `nats-auth-callout-server` image and push it to a container registry that the cluster can access.
+The remote Kubernetes cluster cannot use your local Docker images. You must build the `nats-auth-callout-server` image and push it to a container registry that the cluster can access.◊
 
 1.  **Log in to Docker Hub**:
     Open a terminal and run the following command. You will be prompted for your Docker Hub username and password (or an access token).
