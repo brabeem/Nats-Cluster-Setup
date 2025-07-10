@@ -10,6 +10,7 @@ config:
     fileStore:
       pvc:
         size: 10Gi
+        storageClassName: local-path
   merge:
     accounts:
       MQTT:

@@ -3,13 +3,15 @@ auth:
   password: "password"
   sentinel: true
 
-
 master:
   count: 1
-
+  persistence:
+    enabled: false
 
 replica:
   replicaCount: 3
+  persistence:
+    enabled: false
 
 sentinel:
   enabled: true
