@@ -3,7 +3,9 @@ kind: Service
 metadata:
   name: nats-external
 spec:
-  type: LoadBalancer
+  type: ClusterIP
+  externalIPs:
+  - 134.199.170.113 # Replace with the actual IP
   selector:
     app.kubernetes.io/name: nats
   ports:
